@@ -1,0 +1,5 @@
+(define rpr( x y )
+  (if(= y 0)1
+     (* x rpr(x (- y 1)))
+  )
+)

@@ -1,0 +1,139 @@
+{;;;				
+Design document 
+--------------------------------------------------------------------
+Notkun: tvinntala(a,b)
+Fyrir: a og b eru fleytitölur.
+Gildi: c er tvinntala þar sem a er raunhluti og b er þverhluti.
+
+Notkun: raunh(c)
+Fyrir: c er tvinntala.
+Gildi: a er raunhluti.
+
+Notkun: thverh(c)
+Fyrir: c er tvinntala.
+Gildi: b er þverhluti.
+
+Notkun: prenTvinn(c)
+Fyrir: c er tvinntala.
+Gildi: Prentar út a+bi ef b er stærra en 0 annars prentar út a-bi.
+
+Notkun: +++(c,d)
+Fyrir: c og d eru tvinntölur.
+Gildi: e er útkoma tvinntölusamlagningu.
+
+Notkun: ---(c,d)
+Fyrir: c og d eru tvinntölur.
+Gildi: e er útkoma tvinntölufrádráttar.
+
+Notkun: ***(c,d)
+Fyrir: c og d eru tvinntölur.
+Gildi: e er útkoma tvinntölumargföldun.
+
+Notkun: ///(c,d)
+Fyrir: c og d eru tvinntölur.
+Gildi: e er útkoma tvinntöludeilingu.
+;;;}				
+
+
+
+"tvinntolur.mmod" = 
+{;;; 
+Fastayrðing gagna: Tvinntala með gildil a+bi. Táknuð með fylkinu [a,b].
+;;;}
+!
+{{
+tvinntala = 
+	fun (a,b) {
+		var c = makeArray(2);
+		c[0] = a;
+		c[1] = b;
+		return c;
+	};
+
+raunh = 
+	fun (c) {
+		return c[0];
+	};
+
+thverh = 
+	fun (c) {
+		return c[1];
+	};
+
+prenTvinn = 
+	fun (c) {
+		if (c[1] > 0){
+			writeln(c[0] ++ "+" ++ c[1] ++ "i");
+		}
+		else {
+			writeln(c[0] ++ c[1] ++ "i");
+		};
+	};
+
++++ = 
+	fun (c, d) {
+		var e = makeArray(2);
+		e[0] = c[0] + d[0];
+		e[1] = c[1] + d[1];
+		return e;
+	};
+
+--- = 
+	fun (c, d) {
+		var e = makeArray(2);
+		e[0] = c[0] - d[0];
+		e[1] = c[1] - d[1];
+		return e;
+	};
+
+*** = 
+	fun (c, d) {
+		var e = makeArray(2);
+		e[0] = (c[0] * d[0] - c[1] * d[1]);
+		e[1] = (c[0] * d[0] + c[1] * d[1]);
+		return e;
+	};
+
+/// = 	
+	fun (c, d) {	
+		var e = makeArray(2);
+		e[0] = (c[0] * d[0] + c[1] * d[1]) / (d[0] * d[0] + d[1] * d[1]);
+		e[1] = (c[0] * d[0] - c[1] * d[1]) / (d[0] * d[0] + d[1] * d[1]);
+		return e;
+	};
+}};
+
+;;; testforrit fyrir tvinntolur.mmod
+"tvinntolur.mexe" = main in 
+{{
+main = 
+	fun(){
+		var a,b,c,d,e,f;
+		a = tvinntala(2.0, 3.0);
+		println("a");
+		prenTvinn(a);
+		b = tvinntala(4.0, 5.0);
+		println("b");
+		prenTvinn(b);
+		c = a +++ b;
+		println("+++");
+		prenTvinn(c);
+		d = a --- b;
+		println("---");
+		prenTvinn(d);
+		e = a *** b;
+		println("***");
+		prenTvinn(e);
+		f = a /// b;
+		println("///");
+		prenTvinn(f);
+	};
+}}
+*
+"tvinntolur.mmod"
+*
+BASIS
+;
+
+
+

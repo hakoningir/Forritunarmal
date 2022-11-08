@@ -1,0 +1,7 @@
+(define (reviota n)
+  (define (helper i n)
+    (if (> n  0) n
+        (helper(-n 1))
+    )
+  )
+)

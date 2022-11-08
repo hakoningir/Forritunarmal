@@ -1,0 +1,7 @@
+(define (lamx x)
+  (lambda (lamy y)
+    (lambda (lamz z)
+      (x (y (y z)))
+    )
+  )
+)

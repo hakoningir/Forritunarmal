@@ -1,0 +1,10 @@
+((((lambda (x)
+  (lambda (y)
+    (lambda (z)
+      (x (y (y z)))
+     )
+    )
+   )(lambda (a) (+ a 1))
+  )(lambda (b) (+ b 2))
+ )10
+) 
