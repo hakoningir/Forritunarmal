@@ -1,0 +1,69 @@
+{;;; 
+
+Design Document
+--------------------------------------------------------------
+ Notkun: 
+ Fyrir: 
+ Gildi:
+
+;;;}
+
+{;;;
+Fastayrðing gagna: 
+;;;}
+
+"V13e.mexe" = main in 
+{{
+main =
+    fun() {
+        var c = makeChannel();         
+        var r = makeChannel();
+
+        rec fun Producer(){
+        var i = bigInteger(0);
+            while (i != 100000){
+                i = i+1;
+                c <- i*i;
+            };
+        };
+
+    
+        rec fun Consumer(){
+            var i = bigInteger(0);
+            var sum = bigInteger(0);
+            while (i != 100000){
+                i = i+1;
+                sum = sum + <-c;
+            };
+            r <- sum;
+        };
+
+        go{Producer()};
+        go{Producer()};
+        go{Consumer()};
+        go{Consumer()};
+        val x = <- r;
+        val y = <- r;
+        write(x);
+        write("+");
+        write(y);
+        writeln("="++(x+y));
+    };
+}}
+*
+BASIS
+;
+
+
+{;;;
+Skrifið Morpho forrit eða fall sem gerir sama og Java forritið að ofan. Þið megið
+skrifa forritið sem Morpho script eða þýðingarhæft forrit eftir því hvað ykkur hentar.
+Einfaldast er að nota channel sem samskiptarás, sem virkar þá svipað og Container að
+ofan. Fallið makeChannel býr til nýjan channel. Til að senda gildi inn í channel má
+nota tvíundaraðgerðina <-. Til að sækja gildi úr channel má nota einundaraðgerðina
+<-. Þessar aðgerðir hafa sama nafn en eru ekki sama aðgerðin. Ef breytan c inniheldur
+channel þá mun segðin c<-x senda (skrifa) gildið x í þann channel. Segðin x = <-c
+mun sækja (lesa) gildi úr þeim channel og setja í breytuna x.
+Einföld leið til að koma í veg fyrir yfirflæði er að frumstilla breytuna, sem summerað
+er í, með gildinu bigInteger(0).
+ ;;;} 
